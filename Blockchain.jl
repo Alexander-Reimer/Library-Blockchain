@@ -9,7 +9,6 @@ end
 
 function newBlock(Block, buch, benutzer, ausleiheDatum, Genesis, IDString) #erstellt einen neuen Block und pushed ihn in allBlocks
     b = Block(buch, benutzer, ausleiheDatum, Genesis)
-    println(b)
     io = open(IDString * "NewBlock.txt", write=true)
         BlockVector = []
         push!(BlockVector, string(b.buch))
@@ -17,7 +16,6 @@ function newBlock(Block, buch, benutzer, ausleiheDatum, Genesis, IDString) #erst
         push!(BlockVector, string(b.ausleiheDatum))
         
         write(io, string(BlockVector))
-        println(string(BlockVector))
     close(io)
 end
 
@@ -80,7 +78,7 @@ end
 function getCurrentHashes(currentHashes, IDs, IDRegister)
     for i = 1:length(IDs)
         a = string(i)
-        io = open("Z:\\Alexander Reimer\\Desktop\\Hashes\\" * a * ".txt", read = true)
+        io = open(a * ".txt", read = true)
         content = readline(io)
         if IDRegister[i] == 3
             push!(currentHashes, 0)
@@ -294,14 +292,8 @@ function main()
     alreadyGottenBlocks = Array{Block}(undef, 0)
     b = Block(-10, "Niemand", 12011324, 00)
     alreadyGottenBlocks = [b, b, b]
-    println(b)
-    println(alreadyGottenBlocks)
-    println(allBlocks)
     newBlock(Block, 01, "Matteo", 05102019, Genesis, IDString)
-    println(allBlocks)
     getNewBlocks(IDRegister, alreadyGottenBlocks, allBlocks, ownHash)
-    println(allBlocks)
-
     hashes = createHash(allBlocks)
     ownHash = hashes[length(hashes)]
 
